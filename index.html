@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Butterfly: Where little joys take shape.</title>
+    
+  <!-- Font Awesome for social / UI icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+    
+    :root{
+      --text:#234B56;
+      --coral:#E68A94;
+      --blue:#7CA9B2;
+      --lavender:#9C8CB9;
+      --gold:#D4A373;
+      --cream:#FFF9F6;
+      --soft:#F5EDEA;
+      --white:#FFFFFF;
+      --line:#E8DCD8;
+      --shadow:0 18px 50px rgba(35,75,86,.10);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:var(--cream);
+      line-height:1.7;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    /* ---------- NAVBAR ---------- */
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,249,246,.94);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(35,75,86,.08);
+    }
+
+    .nav-inner{
+      max-width:1420px;
+      margin:auto;
+      min-height:72px;
+      padding:0 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      font-size:1.2rem;
+      letter-spacing:.2px;
+    }
+
+    .brand-butterfly{
+      width:38px;height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:#fff;
+      color:var(--coral);
+      box-shadow:0 6px 18px rgba(230,138,148,.18);
+      font-size:1.05rem;
+    }
+    
+    .brand img{
+        width: 68px;
+        height: 68px;
+        object-fit: contain;
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .nav-links a{
+      padding:9px 14px;
+      border-radius:999px;
+      font-size:.92rem;
+      font-weight:650;
+      transition:.22s ease;
+    }
+
+    .nav-links a:hover{
+      background:var(--coral);
+      color:#fff;
+    }
+
+    .nav-cta{
+      background:var(--text);
+      color:#fff !important;
+    }
+
+    .nav-cta:hover{
+      background:var(--coral) !important;
+    }
+
+    /* ---------- MOBILE MENU TOGGLE BUTTON ---------- */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+    
+
+/* HERO — BACKGROUND IMAGE SLIDER + FIXED TEXT */
+.hero{
+  padding-top: 0px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  position:relative;
+  min-height:650px;
+  overflow:hidden;
+  background:var(--cream);
+}
+.hero-slider{
+  position:relative;
+  width:100%;
+  min-height:650px;
+  overflow:hidden;
+}
+.hero-track{
+  display:flex;
+  width:300%;
+  height:650px;
+  transition:transform .55s cubic-bezier(.22,.61,.36,1);
+  will-change:transform;
+  touch-action:pan-y;
+  cursor:grab;
+}
+.hero-track.dragging{
+  cursor:grabbing;
+  transition:none;
+}
+.hero-slide{
+  position:relative;
+  width:33.333333%;
+  min-width:33.333333%;
+  height:650px;
+  flex-shrink:0;
+  background-size:cover;
+  background-position:center;
+}
+.hero-slide::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(20,55,64,.66) 0%,rgba(35,75,86,.38) 42%,rgba(35,75,86,.08) 75%),
+    linear-gradient(0deg,rgba(35,75,86,.18),transparent 45%);
+}
+.hero-slide:nth-child(1){
+  background-image:url("photo/s1.png");
+}
+.hero-slide:nth-child(2){
+  background-image:url("photo/s2.png");
+}
+.hero-slide:nth-child(3){
+  background-image:url("photo/s3.png");
+}
+
+/* This layer does NOT move with the slides */
+
+.hero-fixed-content{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  width:min(1120px,100%);
+  margin:auto;
+  padding:80px 24px;
+  display:flex;
+  align-items:center;
+  pointer-events:none;
+}
+.hero-content-inner{
+  width:min(610px,100%);
+  pointer-events:auto;
+}
+.hero .badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 13px;
+  border-radius:999px;
+  background:rgba(255,255,255,.92);
+  color:var(--coral);
+  border:1px solid rgba(255,255,255,.65);
+  font-size:.78rem;
+  font-weight:850;
+  margin-bottom:19px;
+  box-shadow:0 8px 25px rgba(35,75,86,.12);
+}
+.hero h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(2.7rem,6vw,4.8rem);
+  line-height:.98;
+  letter-spacing:-2.5px;
+  margin-bottom:22px;
+  color:#fff;
+  text-shadow:0 5px 22px rgba(35,75,86,.18);
+}
+.hero h1 span{color:#FFD5D9}
+.hero-copy{
+  max-width:620px;
+  color:rgba(255,255,255,.94);
+  font-size:1.08rem;
+  text-shadow:0 2px 12px rgba(35,75,86,.22);
+}
+.hero .buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero .btn-primary{
+  background:var(--coral);
+  color:#fff;
+  box-shadow:0 9px 24px rgba(35,75,86,.18);
+}
+.hero .btn-primary:hover{background:var(--text);transform:translateY(-2px)}
+.hero .btn-secondary{
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(255,255,255,.7);
+  color:var(--text);
+}
+.hero .btn-secondary:hover{
+  border-color:#fff;
+  color:var(--blue);
+  transform:translateY(-2px);
+}
+.hero-arrow{
+  position:absolute;
+  top:50%;
+  z-index:6;
+  transform:translateY(-50%);
+  width:48px;
+  height:48px;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:50%;
+  background:rgba(35,75,86,.34);
+  backdrop-filter:blur(8px);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:.22s ease;
+  font-size:1.05rem;
+}
+.hero-arrow:hover{
+  background:var(--coral);
+  border-color:var(--coral);
+  transform:translateY(-50%) scale(1.06);
+}
+.hero-arrow.prev{left:22px}
+.hero-arrow.next{right:22px}
+.hero-dots{
+  position:absolute;
+  z-index:7;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.hero-dot{
+  width:10px;
+  height:10px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.58);
+  cursor:pointer;
+  padding:0;
+  transition:.22s ease;
+}
+.hero-dot.active{
+  width:30px;
+  border-radius:999px;
+  background:#fff;
+}
+
+    /* ---------- FOOTER ---------- */
+    footer{
+      background:#fff;
+      border-top:1px solid var(--line);
+      padding:60px 24px 24px;
+    }
+
+    .footer-inner{
+      width:min(1120px,100%);
+      margin:auto;
+    }
+
+    .footer-top{
+      display:grid;
+      grid-template-columns:1.4fr 1fr 1fr;
+      gap:45px;
+      padding-bottom:42px;
+    }
+
+    .footer-brand p{
+      max-width:400px;
+      color:#647A80;
+      margin-top:14px;
+    }
+
+    .footer-title{
+      font-size:.82rem;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-weight:850;
+      margin-bottom:15px;
+    }
+
+    .quick-links{
+      display:flex;
+      flex-direction:column;
+      gap:9px;
+    }
+
+    .quick-links a{
+      color:#5E747A;
+      font-size:.93rem;
+      transition:.18s;
+    }
+
+    .quick-links a:hover{color:var(--coral);padding-left:3px}
+
+    .socials{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .social{
+      width:44px;height:44px;
+      border-radius:13px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--line);
+      background:var(--cream);
+      font-size:1.05rem;
+      transition:.22s ease;
+    }
+
+    .social:hover{
+      color:#fff;
+      background:var(--coral);
+      border-color:var(--coral);
+      transform:translateY(-3px);
+    }
+
+    .social.facebook:hover{background:#1877F2;border-color:#1877F2}
+    .social.tiktok:hover{background:#111;border-color:#111}
+    .social.gmail:hover{background:#EA4335;border-color:#EA4335}
+
+    .social-note{
+      color:#7A8D92;
+      font-size:.78rem;
+      margin-top:11px;
+    }
+
+.footer-bottom{
+      border-top:1px solid var(--line);
+      padding-top:20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      flex-wrap:wrap;
+      color:#7A8D92;
+      font-size:.8rem;
+    }
+
+    .footer-bottom span:first-child{color:var(--text);font-weight:650}
+
+    /* ==========================================
+       RESPONSIVE DESIGN (TABLET & MOBILE)
+       ========================================== */
+
+    /* Small Tablet & Large Phone Screen View (Width <= 768px)
+       EXACTLY MATCHED TO STORY PAGE MENU DESIGN */
+    @media(max-width: 768px){
+      .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text);
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 249, 246, 0.98);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        gap: 15px;
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 10px 20px rgba(35,75,86,0.08);
+        display: none;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 9px 14px;
+        border-radius: 999px;
+        font-size: .92rem;
+        font-weight: 650;
+      }
+
+      .footer-top{
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .footer-brand{
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* Mobile Phone Screen View (Width <= 520px) */
+    @media(max-width: 520px){
+      .footer-top{
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      .footer-bottom{
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+</style>
+
+<style id="mobile-hero-full-image-fix">
+/* Keep hero artwork fully visible on phones — no side/top cropping */
+@media (max-width: 768px){
+  .hero{
+    padding-left:0 !important;
+    padding-right:0 !important;
+    min-height:0 !important;
+    background:#FFF9F6 !important;
+  }
+
+  .hero-slider{
+    width:100% !important;
+    min-height:0 !important;
+    max-height:300px !important;
+    height:auto !important;
+    overflow:hidden !important;
+    background:#FFF9F6 !important;
+  }
+
+  .hero-track{
+    width:300% !important;
+    height:240px !important;
+    min-height:0 !important;
+    aspect-ratio:3 / 1 !important;
+  }
+
+  .hero-slide{
+    height:100% !important;
+    min-height:0 !important;
+    background-size:contain !important;
+    background-position:center center !important;
+    background-repeat:no-repeat !important;
+    background-color:#FFF9F6 !important;
+  }
+
+  /* Keep the dark text-readable layer subtle so the artwork remains clear. */
+  .hero-slide::after{
+    background:
+      linear-gradient(90deg,rgba(20,55,64,.42) 0%,rgba(35,75,86,.16) 48%,rgba(35,75,86,0) 78%),
+      linear-gradient(0deg,rgba(35,75,86,.08),transparent 55%) !important;
+  }
+
+  .hero-fixed-content{
+    padding:42px 24px !important;
+  }
+
+  .hero h1{
+    font-size:clamp(2rem,8.5vw,3.2rem) !important;
+    
+    letter-spacing:-1.4px !important;
+    line-height:1.02 !important;
+    margin-bottom:14px !important;
+  }
+
+  .hero-copy{
+    font-size:.92rem !important;
+    line-height:1.55 !important;
+    max-width:92% !important;
+  }
+
+  .hero .buttons{
+    gap:8px !important;
+    margin-top:18px !important;
+  }
+
+  .hero-arrow{
+    width:38px !important;
+    height:38px !important;
+    font-size:.85rem !important;
+  }
+
+  .hero-arrow.prev{left:10px !important}
+  .hero-arrow.next{right:10px !important}
+
+  .hero-dots{
+    bottom:12px !important;
+    gap:7px !important;
+  }
+
+  .hero-dot{
+    width:8px !important;
+    height:8px !important;
+  }
+
+  .hero-dot.active{
+    width:23px !important;
+  }
+}
+
+/* On very small phones, keep the full picture visible and avoid text overflow. */
+@media (max-width: 520px){
+  .hero-fixed-content{
+    padding:30px 20px 38px !important;
+  }
+
+  .hero h1{
+    font-size:clamp(1.95rem,5vw,2rem) !important;
+  }
+
+  .hero-copy{
+    font-size:.82rem !important;
+    line-height:1.48 !important;
+    max-width:88% !important;
+  }
+
+  .hero .buttons{
+    margin-top:14px !important;
+  }
+
+  .hero .btn{
+    padding:9px 13px !important;
+    font-size:.82rem !important;
+  }
+}
+</style>
+
+</head>
+<body>
+    
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Butterfly home">
+        <img src="photo/l2-removebg-preview.png" alt="">
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a class="nav-cta" href="index.html">Home</a>
+        <a href="gift.html">Gift</a>
+        <a href="story.html">Our Story</a>
+        <a href="contact.html">Contact Us</a>
+      </nav>
+    </div>
+  </header>
+  
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Butterfly Hero">
+    <div class="hero-slider">
+
+      <!-- Background images only -->
+      <div class="hero-track" id="heroTrack">
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
+      </div>
+
+      <!-- Fixed text/content: stays in the same position while images slide -->
+      <div class="hero-fixed-content">
+        <div class="hero-content-inner">
+          
+
+          <h1>
+           Where Fellings<br>
+            <span>Bloom </span>Into Little Joys!
+          </h1>
+
+          <p class="hero-copy">
+            <b style="font-size: larger;">Butterfly </b> ကနေတစ်ဆင့် ကိုယ်တန်ဖိုးထားရသူတွေအတွက် နှလုံးသားထဲက မမြင်နိုင်တဲ့ ခံစားချက်တွေကို လှပတဲ့ လက်ဆောင်လေးတွေအဖြစ် ပွင့်လန်းလာအောင် ဖန်တီးလိုက်ပါ။
+          </p>
+
+          <div class="buttons">
+            <a class="btn btn-primary" href="gift.html">
+              <i class="fa-solid fa-gift"></i>
+                Create Something  
+            </a>
+            <a class="btn btn-secondary" href="story.html">
+              <i class="fa-solid fa-butterfly"></i>
+                Butterfly's Story  
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <button class="hero-arrow prev" id="heroPrev" type="button" aria-label="ယခင်ပုံ">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="hero-arrow next" id="heroNext" type="button" aria-label="နောက်ပုံ">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+<div class="hero-dots" role="tablist" aria-label="Hero ပုံများ">
+        <button class="hero-dot active" type="button" aria-label="ပုံ ၁"></button>
+        <button class="hero-dot" type="button" aria-label="ပုံ ၂"></button>
+        <button class="hero-dot" type="button" aria-label="ပုံ ၃"></button>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <a class="brand" href="#top">
+            <img src="photo/l2-removebg-preview.png" alt="logo">
+            <span>Butterfly</span>
+          </a>
+
+          <p>
+            <b>Where little joys take shape.</b> <br>နှလုံးသားထဲက ခံစားချက်လေးတွေကို အမှတ်တရဖြစ်စေမယ့် အရာလေးတွေအဖြစ် ဖန်တီးနိုင်မယ့်နေရာငယ်လေး...
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-title">Quick Links</div>
+          <div class="quick-links">
+            <a href="index.html">Home</a>
+            <a href="gift.html">Gift</a>
+            <a href="story.html">Our Story</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-title">Follow Butterfly</div>
+
+          <div class="socials">
+            <!-- Replace these platform URLs with your actual Butterfly accounts -->
+            <a class="social facebook"
+               href="https://www.facebook.com/share/1F5Agi2Mch/"
+               target="_blank"
+               rel="noopener"
+               aria-label="Butterfly on Facebook"
+               title="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+
+            <a class="social tiktok"
+               href="https://tiktok.com/@butterflyoffical_7"
+               target="_blank"
+               rel="noopener"
+               aria-label="Butterfly on TikTok"
+               title="TikTok">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+
+            <a class="social gmail"
+               href="butterfly7701a@gmail.com"
+               target="_blank"
+               rel="noopener"
+               aria-label="Butterfly Gmail"
+               title="Gmail">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+          </div>
+
+          <div class="social-note">
+            Connect with Butterfly on social media.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Butterfly. All rights reserved.</span>
+        <span>Made with little joys &amp; thoughtful moments. </span>
+      </div>
+
+    </div>
+  </footer>
+  
+  <!-- Mobile Menu Toggle Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      if (!menuToggle || !navLinks) return;
+
+      menuToggle.setAttribute('aria-expanded', 'false');
+
+      menuToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        const isOpen = navLinks.classList.toggle('active');
+        const icon = menuToggle.querySelector('i');
+
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+        menuToggle.setAttribute(
+          'aria-label',
+          isOpen ? 'Close navigation menu' : 'Open navigation menu'
+        );
+
+        if (icon) {
+          icon.classList.toggle('fa-bars', !isOpen);
+          icon.classList.toggle('fa-xmark', isOpen);
+        }
+      });
+
+      // Close the menu when a navigation item is selected.
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('active');
+
+          const icon = menuToggle.querySelector('i');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+
+          if (icon) {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+          }
+        });
+      });
+
+      // Close when tapping outside the menu.
+      document.addEventListener('click', function (e) {
+        if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+          navLinks.classList.remove('active');
+
+          const icon = menuToggle.querySelector('i');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Open navigation menu');
+
+          if (icon) {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+          }
+        }
+      });
+    });
+  </script>
+
+
+<script>
+(function(){
+  const track = document.getElementById('heroTrack');
+  const prev = document.getElementById('heroPrev');
+  const next = document.getElementById('heroNext');
+  const dots = Array.from(document.querySelectorAll('.hero-dot'));
+  if(!track || !prev || !next || !dots.length) return;
+
+  let current = 0;
+  let startX = 0;
+  let deltaX = 0;
+  let dragging = false;
+  let autoPlay;
+
+  function goTo(index, animate = true){
+    current = (index + 3) % 3;
+    track.style.transition = animate
+      ? 'transform .55s cubic-bezier(.22,.61,.36,1)'
+      : 'none';
+    track.style.transform = 'translateX(' + (-current * 33.333333) + '%)';
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+  }
+
+  function nextSlide(){ goTo(current + 1); }
+  function prevSlide(){ goTo(current - 1); }
+
+  function restartAuto(){
+    clearInterval(autoPlay);
+    autoPlay = setInterval(nextSlide, 6000);
+  }
+
+  next.addEventListener('click', function(){
+    nextSlide();
+    restartAuto();
+  });
+
+  prev.addEventListener('click', function(){
+    prevSlide();
+    restartAuto();
+  });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', function(){
+      goTo(i);
+      restartAuto();
+    });
+  });
+
+  track.addEventListener('pointerdown', function(e){
+    if(e.pointerType === 'mouse' && e.button !== 0) return;
+    dragging = true;
+    startX = e.clientX;
+    deltaX = 0;
+    track.classList.add('dragging');
+    track.setPointerCapture?.(e.pointerId);
+    clearInterval(autoPlay);
+  });
+
+  track.addEventListener('pointermove', function(e){
+    if(!dragging) return;
+    deltaX = e.clientX - startX;
+    const base = -current * 33.333333;
+    const percent = (deltaX / track.parentElement.offsetWidth) * 33.333333;
+    track.style.transform = 'translateX(' + (base + percent) + '%)';
+  });
+
+  function finishDrag(){
+    if(!dragging) return;
+    dragging = false;
+    track.classList.remove('dragging');
+
+    if(Math.abs(deltaX) > 55){
+      deltaX < 0 ? nextSlide() : prevSlide();
+    }else{
+      goTo(current);
+    }
+    restartAuto();
+  }
+
+  track.addEventListener('pointerup', finishDrag);
+  track.addEventListener('pointercancel', finishDrag);
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowLeft'){ prevSlide(); restartAuto(); }
+    if(e.key === 'ArrowRight'){ nextSlide(); restartAuto(); }
+  });
+
+  goTo(0, false);
+  restartAuto();
+})();
+</script>
+</body>
+</html>
